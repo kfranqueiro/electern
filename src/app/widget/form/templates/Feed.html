@@ -1,0 +1,13 @@
+<form>
+	<h2>${i18n.editFeed}</h2>
+	<div class="${baseClass}-row">
+		<label for="${id}_title">${i18n.title}</label>
+		<input id="${id}_title" name="feed.title">
+	</div>
+	${parentPartial}
+	<h3>${i18n.overrides}</h3>
+	<div class="${baseClass}-overrides" data-dojo-attach-point="overridesNode">
+		${overridesPartial}
+	</div>
+	${actionsPartial}
+</form>

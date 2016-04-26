@@ -1,0 +1,115 @@
+.Form {
+	$inputWidth = 20em;
+
+	&-row {
+		margin-top: 1em;
+
+		&--top {
+			label,
+			input,
+			button,
+			.dgrid {
+				vertical-align: top;
+			}
+		}
+
+		&--actions {
+			padding: 1em 0;
+		}
+	}
+
+	label {
+		box-sizing: border-box;
+		display: inline-block;
+		width: 10em;
+	}
+
+	input,
+	.dgrid {
+		border: 1px solid #ddd;
+	}
+
+	input {
+		box-sizing: border-box;
+		width: $inputWidth;
+
+		&[type=checkbox] {
+			margin-left: 0;
+			width: auto;
+		}
+	}
+
+	.dgrid {
+		display: inline-block;
+		height: 7em;
+		width: $inputWidth;
+	}
+
+	&-overrides &-row {
+		position: relative;
+	}
+
+	&-overrides label {
+		padding-left: 1.5em;
+	}
+
+	&-overrides input:first-child {
+		// Override checkbox
+		position: absolute;
+	}
+}
+
+.modal {
+	&-underlay,
+	&-container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: 0;
+	}
+
+	&-underlay {
+		background-color: #000;
+		opacity: 0.5;
+	}
+
+	&-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	background-color: #fff;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+
+	h2 {
+		background: linear-gradient(#eee 0%, #ccc 100%);
+		margin: 0;
+		padding: 0.5em;
+		text-align: center;
+	}
+
+	h2,
+	h3,
+	p,
+	.Form-row {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.Form-row--actions {
+		background: linear-gradient(#ddd 0%, #eee 100%);
+		text-align: center;
+	}
+
+	.Form-row--actions button {
+		font-size: 14px;
+		font-weight: bold;
+	}
+
+	button {
+		margin: 0 0.5em;
+		padding: 0.5em;
+	}
+}

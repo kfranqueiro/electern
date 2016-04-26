@@ -1,0 +1,7 @@
+{
+	"name": "electern",
+	"main": "browser/main.js",
+	"dependencies": {
+		"sanitize-html": "~1.11.3"
+	}
+}

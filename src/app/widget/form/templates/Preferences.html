@@ -1,0 +1,11 @@
+<form>
+	<h2>${i18n.preferences}</h2>
+	<h3>${i18n.defaultFeedSettings}</h3>
+	<p>${i18n.defaultFeedSettingsDescription}</p>
+	${overridesPartial}
+
+	<div class="${baseClass}-row ${baseClass}-row--actions">
+		<button>${i18n.save}</button>
+		<button type="button" data-dojo-attach-event="click:_onCancelClick">${i18n.cancel}</button>
+	</div>
+</form>

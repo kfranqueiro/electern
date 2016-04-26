@@ -1,0 +1,9 @@
+dist
+electron
+node_modules
+src/dojo
+src/dijit
+src/dgrid
+src/dstore
+src/font-awesome
+src/resources/**/*.css
