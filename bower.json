@@ -5,7 +5,7 @@
 	"dependencies": {
 		"dojo": "~1.10.4",
 		"dijit": "~1.10.4",
-		"dgrid": "SitePen/dgrid#e7f42519ff965c90596ae6b821785f69695f3c49",
+		"dgrid": "~1.1",
 		"font-awesome": "~4.5"
 	},
 	"license": [ "MIT" ]

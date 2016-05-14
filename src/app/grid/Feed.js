@@ -1,7 +1,7 @@
 define([
 	'dojo/_base/declare',
 	'dojo/dom-construct',
-	'./SingleQuery',
+	'dgrid/extensions/SingleQuery',
 	'dgrid/Grid',
 	'dgrid/Keyboard',
 	'dgrid/Selection',
@@ -39,15 +39,6 @@ define([
 				title: {
 					renderCell: this.showUnread ? renderCell : null,
 					renderExpando(level, hasChildren, expanded, item) {
-						if (!level) {
-							// Double-check level, since it doesn't get reported properly for non-ODL Tree updates
-							// or refreshCell calls
-							level = 0;
-							var currentItem = item;
-							while ((currentItem = this.grid.collection.getSync(currentItem.parent))) {
-								level++;
-							}
-						}
 						var node = this.grid._defaultRenderExpando.apply(this, arguments);
 						if (hasChildren) {
 							node.className = 'dgrid-expando-icon fa fa-folder';

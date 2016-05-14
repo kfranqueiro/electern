@@ -1,7 +1,7 @@
 define([
 	'dojo/_base/declare',
 	'dojo/dom-construct',
-	'./SingleQuery',
+	'dgrid/extensions/SingleQuery',
 	'dgrid/Grid',
 	'dgrid/Keyboard',
 	'dgrid/Selection',
