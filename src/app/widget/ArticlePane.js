@@ -16,7 +16,7 @@ define([
 		postCreate() {
 			on(this.domNode, 'a:click', function (event) {
 				event.preventDefault();
-				require('shell').openExternal(this.href);
+				require('electron').shell.openExternal(this.href);
 			});
 
 			this.set('article', null);

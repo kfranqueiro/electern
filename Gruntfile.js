@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		appName: 'Electern',
 		appVersion: packageConfig.version,
-		electronVersion: '0.36.12',
+		electronVersion: '1.0.2',
 
 		'electron-download': {
 			options: {

@@ -24,7 +24,6 @@ define([
 	const pathUtil = require('path');
 	const ipc = require('electron').ipcRenderer;
 	const userDataDir = require('electron').remote.app.getPath('userData');
-	console.log(userDataDir);
 	const readFile = util.promisify(fs.readFile);
 
 	const feedStore = new FeedStore({
