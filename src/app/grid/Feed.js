@@ -63,7 +63,10 @@ define([
 						// (refreshCell loses level information, but that's worked around in renderExpando above.)
 						while (item.parent != null) {
 							item = this.collection.getSync(item.parent);
-							this.refreshCell(this.cell(item, 'title'));
+							var cell = this.cell(item, 'title');
+							if (cell && cell.element) {
+								this.refreshCell(cell);
+							}
 						}
 					}
 				});
