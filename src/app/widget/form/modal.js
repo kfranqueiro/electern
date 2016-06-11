@@ -105,10 +105,12 @@ define([
 			const dfd = new Deferred();
 
 			const listeners = [
-				on.once(formWidget, 'submit', function () {
-					dfd.resolve(formWidget.get('value'));
+				on(formWidget, 'submit', function () {
+					if (!formWidget.validate || formWidget.validate()) {
+						dfd.resolve(formWidget.get('value'));
+					}
 				}),
-				on.once(formWidget, 'cancel', function () {
+				on(formWidget, 'cancel', function () {
 					dfd.reject();
 				})
 			];

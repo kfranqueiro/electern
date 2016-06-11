@@ -1,0 +1,11 @@
+<form>
+	<h2>${i18n.findArticles}</h2>
+	<div class="${baseClass}-row">
+		<label for="${id}_query">${i18n.searchQuery}</label>
+		<input id="${id}_query" name="query" required>
+	</div>
+	<div class="${baseClass}-row ${baseClass}-row--actions">
+		<button>${i18n.search}</button>
+		<button type="button" data-dojo-attach-event="click:_onCancelClick">${i18n.cancel}</button>
+	</div>
+</form>

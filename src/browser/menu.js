@@ -84,10 +84,10 @@ menu.push(
 		label: 'F&eed',
 		submenu: [
 			{
-				label: '&Edit Feed/Folder',
-				accelerator: 'CmdOrCtrl+E',
+				label: 'Find Articles...',
+				accelerator: 'CmdOrCtrl+F',
 				click() {
-					send('feed-edit');
+					send('article-search');
 				}
 			},
 			{
@@ -95,6 +95,13 @@ menu.push(
 				accelerator: 'CmdOrCtrl+R',
 				click() {
 					send('feed-mark-all-as-read');
+				}
+			},
+			{
+				label: '&Edit Feed/Folder...',
+				accelerator: 'CmdOrCtrl+E',
+				click() {
+					send('feed-edit');
 				}
 			},
 			{

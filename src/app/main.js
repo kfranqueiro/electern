@@ -11,14 +11,16 @@ define([
 	'./widget/form/Feed',
 	'./widget/form/Folder',
 	'./widget/form/Preferences',
+	'./widget/form/Search',
 	'./widget/form/modal',
 	'./store/Article',
 	'./store/Feed',
 	'./retrieveFeed',
 	'./userConfig',
-	'./util'
+	'./util',
+	'dojo/i18n!./nls/main'
 ], function (lang, aspect, on, all, ArticleGrid, FeedGrid, ArticlePane, AddForm, FeedForm, FolderForm,
-		PreferencesForm, modal, ArticleStore, FeedStore, retrieveFeed, userConfig, util) {
+		PreferencesForm, SearchForm, modal, ArticleStore, FeedStore, retrieveFeed, userConfig, util, i18n) {
 
 	const fs = require('fs');
 	const pathUtil = require('path');
@@ -41,6 +43,7 @@ define([
 
 	const articlePane = new ArticlePane({}, 'article');
 
+	let searchRx;
 	let skipRecalculate = false;
 
 	function recalculateUnread(feedId) {
@@ -105,9 +108,14 @@ define([
 			collection = articleStore.filter({ isPinned: true });
 		}
 		else if (item.id === 'unread') {
-			collection = articleStore.filter(function (item) {
-				return !item.isRead;
+			collection = articleStore.filter(function (article) {
+				return !article.isRead;
 			});
+		}
+		else if (item.id === 'search') {
+			collection = searchRx ? articleStore.filter(function (article) {
+				return searchRx.test(article.title) || searchRx.test(article.content);
+			}) : null;
 		}
 		else if (!feedStore.mayHaveChildren(item)) {
 			collection = articleStore.filter({ feedId: item.id });
@@ -188,6 +196,7 @@ define([
 	const addForm = new AddForm({ folderCollection: folderCollection });
 	const feedForm = new FeedForm({ folderCollection: folderCollection });
 	const folderForm = new FolderForm(); // folderCollection is set when displayed
+	const searchForm = new SearchForm();
 	const preferencesForm = new PreferencesForm();
 	let shouldDelete;
 
@@ -312,6 +321,20 @@ define([
 			feed.downloadedDate = 0;
 		});
 		tick();
+	});
+
+	ipc.on('article-search', function () {
+		searchForm.set('value', {
+			query: ''
+		});
+		modal.show(searchForm).then(function (value) {
+			searchRx = new RegExp(value.query, 'i');
+			var searchItem = feedStore.getSync('search');
+			searchItem.title = i18n.searchResults + ' - ' + value.query;
+			feedStore.putSync(searchItem);
+			feedGrid.clearSelection();
+			feedGrid.select('search');
+		});
 	});
 
 	ipc.on('preferences', function () {

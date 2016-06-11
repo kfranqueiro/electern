@@ -68,10 +68,15 @@ define([
 				icon: 'bolt',
 				parent: null,
 				title: i18n.unread
+			}, {
+				id: 'search',
+				icon: 'search',
+				parent: null,
+				title: i18n.searchResults
 			} ];
 
-			items.forEach(function (item) {
-				Object.defineProperty(item, '_system', { value: true });
+			items.forEach(function (item, i) {
+				Object.defineProperty(item, '_system', { value: items.length - i });
 				data.push(item);
 			});
 
