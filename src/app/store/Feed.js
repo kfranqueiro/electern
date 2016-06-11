@@ -28,7 +28,7 @@ define([
 				if (this.mayHaveChildren(child)) {
 					this.getChildren(child).fetchSync().forEach(processChild, this);
 				}
-				else {
+				else if (!child._system) {
 					leaves.push(child);
 				}
 			}

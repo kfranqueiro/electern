@@ -245,7 +245,14 @@ define([
 		}
 
 		modal.show(form).then(function (value) {
+			var isFeedChanged = value.feed.url !== item.url;
+
 			feedStore.put(lang.mixin(item, value.feed));
+
+			if (isFeedChanged) {
+				refreshFeed(item);
+			}
+
 			if (value.config) {
 				userConfig.setOptions(item.id, value.config);
 				userConfig.save();
@@ -351,17 +358,21 @@ define([
 
 	const TICK_INTERVAL = 150000;
 
+	function refreshFeed(feed) {
+		return retrieveFeed(feed.url).then(function (data) {
+			feed.downloadedDate = data.metadata.downloadedDate;
+			feedStore.putSync(feed);
+			addArticles(data.articles, feed);
+		}).then(function () {
+			articleStore.prune(feed.id);
+		});
+	}
+
 	function tick() {
 		const promises = [];
 		feedStore.getFeeds().forEach(function (feed) {
 			if (feed.downloadedDate < new Date() - feedStore.getOptions(feed).updateInterval * 60000) {
-				promises.push(retrieveFeed(feed.url).then(function (data) {
-					feed.downloadedDate = data.metadata.downloadedDate;
-					feedStore.putSync(feed);
-					addArticles(data.articles, feed);
-				}).then(function () {
-					articleStore.prune(feed.id);
-				}));
+				promises.push(refreshFeed(feed));
 			}
 		});
 
