@@ -3,6 +3,8 @@ define([
 	'./FsMemory',
 	'../userConfig'
 ], function (Trackable, FsMemory, userConfig) {
+	var fs = require('fs');
+
 	var ArticleStore = FsMemory.createSubclass([ Trackable ], {
 		addSync(item) {
 			var existingItem = this.getSync(item.id);
@@ -11,6 +13,14 @@ define([
 				return existingItem;
 			}
 
+			return this.inherited(arguments);
+		},
+
+		removeSync(id) {
+			var item = this.getSync(id);
+			if (item && item.archive) {
+				require('fs').unlinkSync(item.archive);
+			}
 			return this.inherited(arguments);
 		},
 
@@ -24,6 +34,16 @@ define([
 			for (let i = 0; i < numToRemove; i++) {
 				this.removeSync(data[i].id);
 			}
+		},
+
+		setData(data) {
+			data.forEach(function (article) {
+				if (article.pdf && !fs.existsSync(article.pdf)) {
+					delete article.pdf;
+				}
+			});
+
+			this.inherited(arguments);
 		}
 	});
 

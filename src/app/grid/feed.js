@@ -44,7 +44,7 @@ define([
 							node.className = 'dgrid-expando-icon fa fa-folder';
 						}
 						else {
-							node.className = 'fa fa-' + (item.icon || 'rss');
+							node.className = 'fa fa-fw fa-' + (item.icon || 'rss');
 						}
 						return node;
 					}
