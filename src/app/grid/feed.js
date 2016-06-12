@@ -22,7 +22,7 @@ define([
 		cell.appendChild(document.createTextNode(value + (unread ? ' (' + unread + ')' : '')));
 	}
 
-	return declare([ Grid, SingleQuery, Keyboard, Selection, Tree ], {
+	var FeedGrid = declare([ Grid, SingleQuery, Keyboard, Selection, Tree ], {
 		enableTreeTransitions: false,
 		maintainOddEven: false,
 		selectionMode: 'single',
@@ -51,10 +51,38 @@ define([
 				}
 			};
 			this.sort = [ { property: '_system', descending: true }, { property: 'title' } ];
+		},
 
-			if (this.showUnread) {
-				// Add collection handler here, since the app only sets it once in the constructor args
-				this.collection.on('update', (event) => {
+		postCreate() {
+			this.inherited(arguments);
+
+			// Allow clearing selection by clicking in empty space in content node,
+			// mainly to make it easier to create top-level feeds/folders (by selecting nothing)
+			this.on('.dgrid-content:click', (event) => {
+				if (event.target === this.contentNode) {
+					this.clearSelection();
+				}
+			});
+		},
+
+		highlightRow() {},
+
+		_cleanupCollection() {
+			this.inherited(arguments);
+			if (this._collectionUpdateHandle) {
+				this._collectionUpdateHandle.remove();
+			}
+		},
+
+		_setCollection(collection) {
+			this.inherited(arguments);
+
+			if (this._collectionUpdateHandle) {
+				this._collectionUpdateHandle.remove();
+			}
+
+			if (this.showUnread && collection) {
+				this._collectionUpdateHandle = collection.on('update', (event) => {
 					var item = event.target;
 					if (item.url) {
 						// Unread count may have been updated; update unread count displayed on ancestors.
@@ -71,20 +99,8 @@ define([
 					}
 				});
 			}
-		},
-
-		postCreate() {
-			this.inherited(arguments);
-
-			// Allow clearing selection by clicking in empty space in content node,
-			// mainly to make it easier to create top-level feeds/folders (by selecting nothing)
-			this.on('.dgrid-content:click', (event) => {
-				if (event.target === this.contentNode) {
-					this.clearSelection();
-				}
-			});
-		},
-
-		highlightRow() {}
+		}
 	});
+
+	return new FeedGrid({}, 'feeds');
 });

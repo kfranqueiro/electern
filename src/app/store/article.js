@@ -3,7 +3,7 @@ define([
 	'./FsMemory',
 	'../userConfig'
 ], function (Trackable, FsMemory, userConfig) {
-	return FsMemory.createSubclass([ Trackable ], {
+	var ArticleStore = FsMemory.createSubclass([ Trackable ], {
 		addSync(item) {
 			var existingItem = this.getSync(item.id);
 			if (existingItem) {
@@ -26,4 +26,6 @@ define([
 			}
 		}
 	});
+
+	return new ArticleStore();
 });

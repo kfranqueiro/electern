@@ -1,12 +1,12 @@
 define([
 	'dojo/_base/declare',
-	'../../grid/Feed'
-], function (declare, FeedGrid) {
+	'../../grid/feed'
+], function (declare, feedGrid) {
 	/** Mixin designed for use with the parent partial. */
 	return declare(null, {
 		buildRendering() {
 			this.inherited(arguments);
-			var grid = this.folderGrid = new FeedGrid({
+			var grid = this.folderGrid = new feedGrid.constructor({
 				shouldExpand: function () {
 					return true;
 				},

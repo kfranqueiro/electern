@@ -12,7 +12,7 @@ define([
 	const dateFormatter = new Intl.DateTimeFormat([],
 		{ hour: 'numeric', minute: '2-digit', month: 'numeric', day: 'numeric', year: '2-digit' });
 
-	return declare([ Grid, SingleQuery, Keyboard, Selection ], {
+	var ArticleGrid = declare([ Grid, SingleQuery, Keyboard, Selection ], {
 		cellNavigation: false,
 		maintainOddEven: false,
 		tabableHeader: false,
@@ -97,4 +97,6 @@ define([
 			this.collection.putSync(item);
 		}
 	});
+
+	return new ArticleGrid({}, 'articles');
 });

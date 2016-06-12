@@ -8,7 +8,7 @@ define([
 	/**
 	 * Manages hierarchy of categories and feeds.
 	 */
-	return FsMemory.createSubclass([ Trackable, Tree ], {
+	var FeedStore = FsMemory.createSubclass([ Trackable, Tree ], {
 		getChildren() {
 			var subcollection = this.inherited(arguments);
 			subcollection.queryLog = subcollection.queryLog.concat(this.queryLog.filter(function (args) {
@@ -89,4 +89,6 @@ define([
 			});
 		}
 	});
+
+	return new FeedStore();
 });

@@ -16,15 +16,8 @@ define([
 		filename: '',
 
 		constructor() {
-			// This uses synchronous methods in order to populate data immediately before postscript runs,
-			// rather than needing to notify of adds afterwards.
-			if (this.filename && fs.existsSync(this.filename)) {
-				this.data = JSON.parse(fs.readFileSync(this.filename, { encoding: 'utf8' }), function (key, value) {
-					if (key.slice(-4).toLowerCase() === 'date') {
-						return new Date(value);
-					}
-					return value;
-				});
+			if (this.filename) {
+				this.setFilename(this.filename);
 			}
 		},
 
@@ -42,6 +35,26 @@ define([
 
 		persistSync() {
 			this._persist(true);
+		},
+
+		setFilename(filename) {
+			// This uses synchronous methods to enable flowing directly into setData,
+			// rather than needing to notify of adds afterwards.
+			// Note that this accepts nonexistent filenames as well, to allow persisting on first run.
+
+			if (fs.existsSync(filename)) {
+				this.setData(JSON.parse(fs.readFileSync(filename, { encoding: 'utf8' }), function (key, value) {
+					if (key.slice(-4).toLowerCase() === 'date') {
+						return new Date(value);
+					}
+					return value;
+				}));
+			}
+			else {
+				this.setData([]);
+			}
+
+			this.filename = filename;
 		},
 
 		toJSON() {

@@ -9,7 +9,7 @@ define([
 ], function (on, _WidgetBase, _TemplatedMixin, userConfig, template) {
 	const sanitizeHtml = require('sanitize-html');
 
-	return _WidgetBase.createSubclass([ _TemplatedMixin ], {
+	var ArticlePane = _WidgetBase.createSubclass([ _TemplatedMixin ], {
 		baseClass: 'article',
 		templateString: template,
 
@@ -66,4 +66,6 @@ define([
 			}
 		}
 	});
+
+	return new ArticlePane({}, 'article');
 });
