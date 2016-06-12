@@ -5,6 +5,7 @@ const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipc = electron.ipcMain;
 
+const archive = require('./archive');
 const menuTemplate = require('./menu');
 
 let menu;
@@ -54,4 +55,16 @@ ipc.on('menu-enable', function (event, enabled) {
 
 	menu.items[0].submenu.items.slice(0, -1).forEach(enable);
 	menu.items[2].submenu.items.forEach(enable);
+});
+
+ipc.on('download-archive', function (event, url, filename) {
+	archive.download(url, filename).then(function (absoluteFilename) {
+		mainWindow.webContents.send('archive-downloaded', url, absoluteFilename);
+	}, function (error) {
+		mainWindow.webContents.send('archive-failed', url, error);
+	});
+});
+
+ipc.on('view-archive', function (event, filename) {
+	archive.view(filename);
 });

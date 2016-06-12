@@ -87,7 +87,7 @@ define([
 			const cell = articleGrid.cell(article, 'isRead');
 			cell.row.element.classList.remove('unread');
 			articleGrid.refreshCell(cell);
-			articlePane.set('article', lang.mixin({ feedTitle: feedStore.getSync(article.feedId).title }, article));
+			articlePane.set('article', article);
 		}
 	});
 
