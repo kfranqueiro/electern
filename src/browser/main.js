@@ -1,4 +1,6 @@
 'use strict';
+const pathUtil = require('path');
+
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -22,6 +24,10 @@ const shouldQuit = app.makeSingleInstance(function () {
 
 if (shouldQuit) {
 	app.quit();
+}
+
+if (process.argv.indexOf('--portable') > -1) {
+	app.setPath('userData', pathUtil.join(pathUtil.dirname(app.getPath('exe')), 'userData'));
 }
 
 app.on('window-all-closed', function () {
