@@ -1,5 +1,15 @@
 <form>
 	<h2>${i18n.preferences}</h2>
+	<h3>${i18n.regionSizes}</h3>
+	<div class="${baseClass}-row">
+		<label for="${id}_feeds">${i18n.feeds}</label>
+		<input id="${id}_feeds" name="uiOptions.regionSizes.feeds" pattern="\d+" maxlength="2">
+	</div>
+	<div class="${baseClass}-row">
+		<label for="${id}_articles">${i18n.articles}</label>
+		<input id="${id}_articles" name="uiOptions.regionSizes.articles" pattern="\d+" maxlength="2">
+	</div>
+
 	<h3>${i18n.defaultFeedSettings}</h3>
 	<p>${i18n.defaultFeedSettingsDescription}</p>
 	${overridesPartial}

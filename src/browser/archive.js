@@ -44,11 +44,11 @@ exports.download = function (url, filename) {
 };
 
 exports.view = function (filename) {
-	const bounds = BrowserWindow.getFocusedWindow().getBounds();
+	const size = BrowserWindow.getFocusedWindow().getSize();
 
 	let archiveWindow = new BrowserWindow({
-		height: bounds.height,
-		width: bounds.width,
+		width: size[0],
+		height: size[1],
 		webPreferences: {
 			javascript: false,
 			nodeIntegration: false

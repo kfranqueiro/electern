@@ -2,7 +2,7 @@ define([
 	'dojo/dom-construct',
 	'dojo/on',
 	'./_FeedBase',
-	'../../userConfig',
+	'common/userConfig',
 	'dojo/i18n!../../nls/main',
 	'dojo/text!./templates/Feed.html'
 ], function (domConstruct, on, _FeedBase, userConfig, i18n, template) {

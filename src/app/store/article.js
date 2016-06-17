@@ -1,7 +1,7 @@
 define([
 	'dstore/Trackable',
 	'./FsMemory',
-	'../userConfig'
+	'common/userConfig'
 ], function (Trackable, FsMemory, userConfig) {
 	var fs = require('fs');
 

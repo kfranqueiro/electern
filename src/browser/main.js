@@ -9,6 +9,7 @@ const ipc = electron.ipcMain;
 
 const archive = require('./archive');
 const menuTemplate = require('./menu');
+const userConfig = require('../common/userConfig');
 
 let menu;
 let mainWindow;
@@ -35,13 +36,14 @@ app.on('window-all-closed', function () {
 });
 
 app.on('ready', function () {
+	const size = userConfig.uiOptions.size;
 	mainWindow = new BrowserWindow({
 		center: true,
 		title: 'Electern',
-		minWidth: 600,
-		minHeight: 300,
-		width: 1000,
-		height: 600
+		minWidth: 750,
+		minHeight: 500,
+		width: size[0],
+		height: size[1]
 	});
 
 	menu = Menu.buildFromTemplate(menuTemplate);

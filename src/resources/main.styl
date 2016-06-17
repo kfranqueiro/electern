@@ -29,32 +29,20 @@ input {
 .articles,
 .article {
 	box-sizing: border-box;
-	position: absolute;
 }
 
 .horizontal {
+	display: flex;
+
 	.feeds,
 	.articles,
 	.article {
-		top: 0;
-		bottom: 0;
+		flex-shrink: 0;
 	}
 
-	.feeds {
-		border-right: 1px solid $dividerColor;
-		left: 0;
-		width: 20%;
-	}
-
+	.feeds,
 	.articles {
 		border-right: 1px solid $dividerColor;
-		left: 20%;
-		width: 30%;
-	}
-
-	.article {
-		right: 0;
-		width: 50%;
 	}
 }
 

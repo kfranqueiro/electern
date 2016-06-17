@@ -14,10 +14,11 @@ define([
 	'./widget/form/Search',
 	'./widget/form/modal',
 	'./refresh',
-	'./userConfig',
+	'./resize',
+	'common/userConfig',
 	'dojo/i18n!./nls/main'
 ], function (lang, all, topic, articleGrid, feedGrid, articleStore, feedStore, storeUtil,
-		AddForm, FeedForm, FolderForm, PreferencesForm, SearchForm, modal, refresh, userConfig, i18n) {
+		AddForm, FeedForm, FolderForm, PreferencesForm, SearchForm, modal, refresh, resize, userConfig, i18n) {
 
 	const ipc = require('electron').ipcRenderer;
 
@@ -152,11 +153,14 @@ define([
 
 	ipc.on('preferences', function () {
 		preferencesForm.set('value', {
-			config: userConfig.defaultOptions
+			config: userConfig.defaultOptions,
+			uiOptions: userConfig.uiOptions
 		});
 		modal.show(preferencesForm).then(function (value) {
 			userConfig.defaultOptions = value.config;
+			lang.mixin(userConfig.uiOptions, value.uiOptions);
 			userConfig.save();
+			resize();
 		});
 	});
 

@@ -1,10 +1,8 @@
 'use strict';
 define([
-	'dojo/_base/lang',
-	'dojo/aspect',
 	'dojo/on',
-	'dojo/promise/all',
 	'dojo/topic',
+	'dgrid/util/misc',
 	'./dialogs',
 	'./grid/article',
 	'./grid/feed',
@@ -13,8 +11,9 @@ define([
 	'./store/feed',
 	'./store/util',
 	'./refresh',
+	'./resize',
 	'./opml/import'
-], function (lang, aspect, on, all, topic, dialogs, articleGrid, feedGrid, articlePane, articleStore, feedStore,
+], function (on, topic, miscUtil, dialogs, articleGrid, feedGrid, articlePane, articleStore, feedStore,
 		storeUtil, refresh) {
 
 	const pathUtil = require('path');
