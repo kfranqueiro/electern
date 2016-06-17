@@ -2,7 +2,7 @@ define([
 	'dstore/Trackable',
 	'dstore/Tree',
 	'./FsMemory',
-	'../userConfig',
+	'common/userConfig',
 	'dojo/i18n!../nls/main'
 ], function (Trackable, Tree, FsMemory, userConfig, i18n) {
 	/**

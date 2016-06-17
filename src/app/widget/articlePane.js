@@ -4,7 +4,7 @@ define([
 	'dijit/_WidgetBase',
 	'dijit/_TemplatedMixin',
 	'../archive',
-	'../userConfig',
+	'common/userConfig',
 	'../store/article',
 	'../store/feed',
 	'dojo/i18n!../nls/main',

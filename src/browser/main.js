@@ -35,13 +35,18 @@ app.on('window-all-closed', function () {
 });
 
 app.on('ready', function () {
+	// Load userConfig after ready event fires with userData folder set,
+	// so the folder exists and userConfig loads the right file
+	const userConfig = require('../common/userConfig');
+
+	const size = userConfig.uiOptions.size;
 	mainWindow = new BrowserWindow({
 		center: true,
 		title: 'Electern',
-		minWidth: 600,
-		minHeight: 300,
-		width: 1000,
-		height: 600
+		minWidth: 750,
+		minHeight: 500,
+		width: size[0],
+		height: size[1]
 	});
 
 	menu = Menu.buildFromTemplate(menuTemplate);
