@@ -1,7 +1,7 @@
 {
 	"name": "electern",
 	"description": "An RSS reader built with Electron and dgrid.",
-	"version": "0.1.0-pre",
+	"version": "0.1.0",
 	"main": "src/browser/main.js",
 	"author": "Kenneth G. Franqueiro",
 	"license": "MIT",
