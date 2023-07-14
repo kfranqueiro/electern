@@ -1,20 +1,38 @@
 {
-	"name": "electern",
-	"description": "An RSS reader built with Electron and dgrid.",
-	"version": "0.1.0",
-	"main": "src/browser/main.js",
-	"author": "Kenneth G. Franqueiro",
-	"license": "MIT",
-	"devDependencies": {
-		"electron-download": "~1.4.1",
-		"electron-packager": "5.2.0",
-		"extract-zip": "~1.4.1",
-		"grunt": "~0.4.5",
-		"grunt-contrib-clean": "~0.7.0",
-		"grunt-contrib-stylus": "~1.1",
-		"grunt-contrib-watch": "~0.6.1"
-	},
-	"scripts": {
-		"install": "bower install; cd src; npm install;"
-	}
+  "name": "electern",
+  "description": "An RSS reader built with Electron and dgrid.",
+  "version": "0.2.0-rc.1",
+  "main": "src/browser/main.js",
+  "author": "Kenneth G. Franqueiro",
+  "license": "MIT",
+  "dependencies": {
+    "file-url": "~1.1",
+    "sanitize-html": "~1.27.5"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.2.1",
+    "@electron-forge/maker-deb": "^6.2.1",
+    "@electron-forge/maker-dmg": "^6.2.1",
+    "@electron-forge/maker-zip": "^6.2.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.2.1",
+    "cross-env": "^7.0.3",
+    "electron": "^25.3.0",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.8",
+    "sass": "^1.63.6"
+  },
+  "scripts": {
+    "fix": "npm run lint -- --fix",
+    "lint": "eslint src/app src/browser src/common",
+    "install": "bower install",
+    "make": "npm run scss:min && electron-forge make",
+    "make-all": "npm run scss:min && electron-forge make --platform=darwin && electron-forge make --platform=linux && electron-forge make --platform=win32",
+    "package": "npm run scss:min && electron-forge package",
+    "scss": "sass src/scss:src/css",
+    "scss:watch": "npm run scss -- -w",
+    "scss:min": "npm run scss -- --style=compressed --no-source-map",
+    "start": "npm run scss && cross-env ELECTERN_DEV=1 electron-forge start"
+  }
 }

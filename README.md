@@ -4,44 +4,39 @@ Electern is an Atom/RSS feed reader built using Electron and dgrid.
 
 # Features
 
-* Organize feeds in nested folders
-* Import feeds from OPML (export not supported at this time)
-* Pin articles to store them indefinitely
-* Download individual articles as complete web pages to read offline (using icon in top right)
-* RegExp search within article titles and content
-* Configure how many articles to keep, how often to update, and whether to display images
-  * Defaults can be configured globally (via Preferences), then overridden per-feed
-* Supports portable mode via `--portable` command-line flag
-  * On Mac OS X, you can run `open Electern.app --args --portable`; user data will be saved under the
+- Organize feeds in nested folders
+- Import feeds from OPML (export not supported at this time)
+- Pin articles to store them indefinitely
+- Download individual articles as complete web pages to read offline (using icon in top right)
+- RegExp search within article titles and content
+- Configure how many articles to keep, how often to update, and whether to display images
+  - Defaults can be configured globally (via Preferences), then overridden per-feed
+- Zip distributions support portable mode via `--portable` command-line flag
+  - On Mac OS X, you can run `open Electern.app --args --portable`; user data will be saved under the
     `Contents/MacOS` folder within the app.
 
 # Build Instructions
 
 ## Requirements
 
-You will need `bower` and `grunt-cli` installed globally (i.e. `npm i -g bower grunt-cli`).
+You will need `bower` installed globally (i.e. `npm i -g bower`).
 
 ## Development
 
 1. Clone this repository
-1. `npm install` (which will in turn run `bower install`, then `npm install` inside of `src`)
-1. `grunt dev`
+1. `npm i` (which will in turn run `bower install`)
+1. `npm start`
+1. If you will be editing SCSS, also run `npm run scss:watch`
 
 ## Release
 
-Run `grunt release`
+It is possible to build for all platforms from OS X.
 
-# Usage
+`brew install fakeroot dpkg wine-stable` to install prequisites
 
-## Running the Application
+`npm run make-all` to build for all platforms under `out` subfolder
 
-### Development
-
-Run `bin/run` (or `bin\run.cmd` on Windows).
-
-### Release
-
-Run the application for the respective platform under `dist`.
+On other platforms, `npm run make` will build for the current platform only.
 
 ## License
 

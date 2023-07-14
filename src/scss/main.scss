@@ -1,0 +1,55 @@
+$dividerColor: #ccc;
+$fontSize: 14px;
+
+@import "../font-awesome/css/font-awesome.min.css";
+
+html,
+body {
+  font-family: sans-serif;
+  font-size: $fontSize;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  font-size: $fontSize;
+}
+
+@import "button";
+@import "grid";
+@import "widget/ArticlePane";
+@import "widget/Form";
+
+.feeds,
+.articles,
+.article {
+  box-sizing: border-box;
+}
+
+.horizontal {
+  display: flex;
+
+  .feeds,
+  .articles,
+  .article {
+    flex-shrink: 0;
+  }
+
+  .feeds,
+  .articles {
+    border-right: 1px solid $dividerColor;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}

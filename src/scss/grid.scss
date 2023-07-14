@@ -1,0 +1,79 @@
+@import "../dgrid/css/dgrid.css";
+
+.dgrid-row:nth-child(2n) {
+  // Use nth-child rather than dgrid-row-odd so we can disable maintainOddEven for performance.
+  // (Specify before other styles to let them take precedence)
+  background: #eee;
+}
+
+.dgrid {
+  border: none;
+  height: auto;
+}
+
+.dgrid-header {
+  background: linear-gradient(#fff 0, #ccc 100%);
+}
+
+.dgrid-cell {
+  border: none;
+  cursor: default;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feeds {
+  .dgrid-row {
+    background: transparent;
+  }
+
+  .fa-folder {
+    cursor: pointer;
+
+    &:before {
+      display: inline-block;
+      width: 15px;
+    }
+  }
+
+  .fa-pencil {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    right: 2px;
+  }
+
+  .dgrid-cell:focus .fa-pencil,
+  .dgrid-cell:hover .fa-pencil {
+    display: inherit;
+  }
+
+  .dgrid-row-expanded .fa-folder:before {
+    content: "\f07c"; // fa-folder-open
+  }
+
+  .unread {
+    font-weight: bold;
+  }
+}
+
+.articles {
+  .unread {
+    background-color: #cfc;
+  }
+}
+
+.dgrid .dgrid-selected {
+  // Extra specificity to override other backgrounds
+  background: #cdf;
+}
+
+.field-isPinned,
+.field-isRead {
+  text-align: center;
+  width: 22px;
+}
+.field-date {
+  width: 120px;
+}

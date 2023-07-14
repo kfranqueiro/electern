@@ -1,40 +1,48 @@
-'use strict';
+"use strict";
 
 define([
-	'dojo/on',
-	'dgrid/util/misc',
-	'./grid/article',
-	'./grid/feed',
-	'common/userConfig'
+  "dojo/on",
+  "dgrid/util/misc",
+  "./grid/article",
+  "./grid/feed",
+  "common/userConfig",
 ], function (on, miscUtil, articleGrid, feedGrid, userConfig) {
-	on(window, 'resize', miscUtil.debounce(function () {
-		userConfig.uiOptions.size = require('electron').remote.BrowserWindow.getFocusedWindow().getSize();
-		userConfig.save();
-	}, null, 250));
+  on(
+    window,
+    "resize",
+    miscUtil.debounce(
+      async () => {
+        userConfig.uiOptions.size = await electronApi.getWindowSize();
+        userConfig.save();
+      },
+      null,
+      250
+    )
+  );
 
-	let regionStyles = [];
+  let regionStyles = [];
 
-	function resizeRegions() {
-		regionStyles.forEach(function (style) {
-			style.remove();
-		});
+  function resizeRegions() {
+    regionStyles.forEach(function (style) {
+      style.remove();
+    });
 
-		regionStyles = [];
+    regionStyles = [];
 
-		const sizes = userConfig.uiOptions.regionSizes;
-		let total = 0;
+    const sizes = userConfig.uiOptions.regionSizes;
+    let total = 0;
 
-		for (let key in sizes) {
-			total += sizes[key];
-			regionStyles.push(miscUtil.addCssRule('.' + key, 'width: ' + sizes[key] + '%'));
-		}
-		regionStyles.push(miscUtil.addCssRule('.article', 'width: ' + (100 - total) + '%'));
+    for (let key in sizes) {
+      total += sizes[key];
+      regionStyles.push(miscUtil.addCssRule("." + key, "width: " + sizes[key] + "%"));
+    }
+    regionStyles.push(miscUtil.addCssRule(".article", "width: " + (100 - total) + "%"));
 
-		articleGrid.resize();
-		feedGrid.resize();
-	}
+    articleGrid.resize();
+    feedGrid.resize();
+  }
 
-	resizeRegions();
+  resizeRegions();
 
-	return resizeRegions;
+  return resizeRegions;
 });

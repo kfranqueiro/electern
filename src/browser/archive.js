@@ -1,69 +1,54 @@
-'use strict';
-const fs = require('fs');
-const join = require('path').join;
-const electron = require('electron');
-const BrowserWindow = electron.BrowserWindow;
-const fileUrl = require('file-url');
+"use strict";
+const { existsSync, mkdirSync } = require("fs");
+const { join } = require("path");
+const { app, BrowserWindow, shell } = require("electron");
+const fileUrl = require("file-url");
 
 exports.download = function (url, filename) {
-	let archiveWindow = new BrowserWindow({
-		show: false,
-		webPreferences: {
-			javascript: false,
-			nodeIntegration: false
-		}
-	});
-	let webContents = archiveWindow.webContents;
+  let archiveWindow = new BrowserWindow({
+    show: false,
+    webPreferences: {
+      javascript: false,
+    },
+  });
 
-	const promise = new Promise(function (resolve, reject) {
-		webContents.once('did-finish-load', function () {
-			const saveDir = join(electron.app.getPath('userData'), 'downloadedPages');
-			if (!fs.existsSync(saveDir)) {
-				fs.mkdirSync(saveDir);
-			}
+  return archiveWindow
+    .loadURL(url)
+    .then(() => {
+      const saveDir = join(app.getPath("userData"), "downloadedPages");
+      if (!existsSync(saveDir)) mkdirSync(saveDir);
 
-			const absoluteFilename = join(saveDir, filename);
-			webContents.savePage(absoluteFilename, 'MHTML', function (err) {
-				if (err) {
-					return reject(err);
-				}
-				resolve(absoluteFilename);
-			});
-		});
-	});
-
-	function closeWindow() {
-		archiveWindow.destroy();
-		archiveWindow = webContents = null;
-	}
-
-	promise.then(closeWindow, closeWindow);
-
-	archiveWindow.loadURL(url);
-	return promise;
+      const absoluteFilename = join(saveDir, filename);
+      return archiveWindow.webContents
+        .savePage(absoluteFilename, "MHTML")
+        .then(() => absoluteFilename);
+    })
+    .finally(() => {
+      archiveWindow.destroy();
+      archiveWindow = null;
+    });
 };
 
 exports.view = function (filename) {
-	const size = BrowserWindow.getFocusedWindow().getSize();
+  const [width, height] = BrowserWindow.getFocusedWindow().getSize();
 
-	let archiveWindow = new BrowserWindow({
-		width: size[0],
-		height: size[1],
-		webPreferences: {
-			javascript: false,
-			nodeIntegration: false
-		}
-	});
-	archiveWindow.setMenu(null);
-	archiveWindow.loadURL(fileUrl(filename));
+  let archiveWindow = new BrowserWindow({
+    width,
+    height,
+    webPreferences: {
+      javascript: false,
+    },
+  });
+  archiveWindow.setMenu(null);
+  archiveWindow.loadURL(fileUrl(filename));
 
-	archiveWindow.on('closed', function () {
-		archiveWindow = null;
-	});
+  archiveWindow.on("closed", function () {
+    archiveWindow = null;
+  });
 
-	archiveWindow.webContents.on('will-navigate', function (event, url) {
-		// Open links from downloaded pages in user's default browser
-		event.preventDefault();
-		electron.shell.openExternal(url);
-	});
+  archiveWindow.webContents.on("will-navigate", function (event, url) {
+    // Open links from downloaded pages in user's default browser
+    event.preventDefault();
+    shell.openExternal(url);
+  });
 };
